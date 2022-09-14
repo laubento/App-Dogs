@@ -18,7 +18,7 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    Peso: {
+    peso: {
       type: DataTypes.STRING,
       allowNull: false
     },
