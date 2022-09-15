@@ -1,22 +1,22 @@
-const { Router } = require('express');
 
 
-// Importar todos los routers;
-// Ejemplo: const authRouter = require('./auth.js');
 
+// Traigo axios
 const axios = require('axios');
-const e = require('express');
-const {
-    API_KEY
-  } = process.env;
+// Traigo express
+const { Router } = require('express');
+// Traigo mi API
+const {API_KEY} = process.env;
+// Traigo mis modelos
 const {Dog, Temperamento} = require('../db')
-
+// Creo el servidor 
 const router = Router();
-// router.use(json())
 
 
-// Configurar los routers
-// Ejemplo: router.use('/auth', authRouter);
+
+
+// Funciones para rutas
+
 const getApiInfo = async () => {
     const apiUrl = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`)
     const apiInfo = await apiUrl.data.map(el => {
@@ -61,28 +61,28 @@ const getDog = async (id) => {
             return pepe
         }
     }
-    const pepa = 'No se encontro esa id'
+    const pepa = 0
     return pepa
 }
 
-// sequelize.sync({ alert: true }).then(async () => {
-// 				const newPerson = Dog.build({
-//                     name: 'pepe', altura: 2, peso: '4a'
-//                 });
-// 		await newPerson.save()
-// })
-
-const createDogs = async (name, altura, peso, anoDeVida, img, temperamento, criadoPara) => {
-    console.log(Dog)
-    const newPerson = Dog.build({
-        name: 'pepe', altura: 2, peso: '4a'
-    });
-    console.log(newPerson)
-    await newPerson.save()
-    console.log(Dog)
+const getTemperamet = async () => {
+    const apiUrl = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`)
+    let pepe = []
+    for(var i = 0; i < apiUrl.data.length; i++){
+        if(apiUrl.data[i].temperament){
+            let obj = apiUrl.data[i].temperament.split(',')
+            pepe.push(obj)
+            for(let a = 0; a < pepe[i].length; a++){
+                Temperamento.findOrCreate({
+                    where: {name: pepe[i][a]}
+                })
+            }
+        }else{
+            let obj = 'no tiene temperamento'
+            pepe.push(obj)
+        }
+    }
 }
-createDogs('pepito', 2, '3.4')
-
 
 // Aca van las rutas
  
@@ -104,16 +104,21 @@ router.get('/dogs', async (req, res) => {
 router.get(`/dogs/:id`, async (req, res) => {
     const {id} = req.params
     const pepe = await getDog(id)
-    if(typeof pepe !== 'number'){
-        return res.status(404).send(pepe)
+    if(pepe == 0){
+        return res.status(404).send('No se encontro la raza')
     } 
     return res.status(200).send(pepe)
 }) 
 
+router.get('/temperaments', async (req, res) => {
+    await getTemperamet()
+    const allTemperament = await Temperamento.findAll()
+    return res.status(200).send(allTemperament)
+})
+
 router.post('/dogs', async (req, res) => {
-    const {id, name, altura, peso, anoDeVida, img, temperamento, criadoPara} = req.body
-    console.log(name)
-    const createDog = await Dog.create({ name, altura, peso, anoDeVida})
+    const {name, altura, peso, anoDeVida, imgBd, temperamento, criadoPara} = req.body
+    const createDog = await Dog.create({ name, altura, peso, anoDeVida, imgBd, criadoPara})
     res.status(201).send('ok') 
-})  
+})   
 module.exports = router;

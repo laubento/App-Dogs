@@ -25,6 +25,14 @@ module.exports = (sequelize) => {
     anoDeVida:{
       type: DataTypes.INTEGER,
       allowNull: true
+    },
+    imgBd: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    criadoPara: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   });
 };
