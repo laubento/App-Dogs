@@ -91,7 +91,6 @@ router.get('/dogs', async (req, res) => {
     let total = await getAllDogs()
     if(name){
         let dogsName = total.filter(el => el.name.toLowerCase().includes(name.toLowerCase()))
-        console.log(dogsName)
         if(dogsName.length){
             return res.status(200).send(dogsName)
         }else{
@@ -117,8 +116,13 @@ router.get('/temperaments', async (req, res) => {
 })
 
 router.post('/dogs', async (req, res) => {
+    await getTemperamet()
     const {name, altura, peso, anoDeVida, imgBd, temperamento, criadoPara} = req.body
     const createDog = await Dog.create({ name, altura, peso, anoDeVida, imgBd, criadoPara})
-    res.status(201).send('ok') 
+    const createTemperament = await Temperamento.findAll({
+        where: {name: temperamento}
+    })
+    createDog.addTemperamento(createTemperament)
+    res.send('Personaje creado con exito')
 })   
 module.exports = router;
