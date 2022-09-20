@@ -49,7 +49,7 @@ const getBaseInfo = async () => {
 const getAllDogs = async () => {
     const apiInfo = await getApiInfo()
     const baseInfo = await getBaseInfo()
-    const infoTotal = apiInfo.concat(baseInfo)
+    const infoTotal = baseInfo.concat(apiInfo)
     return infoTotal
 }
 

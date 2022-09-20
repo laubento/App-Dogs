@@ -33,6 +33,11 @@ module.exports = (sequelize) => {
     criadoPara: {
       type: DataTypes.STRING,
       allowNull: true
+    },
+    createInBd: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true
     }
   });
 };
