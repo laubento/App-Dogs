@@ -26,8 +26,8 @@ const getApiInfo = async () => {
             altura: el.weight.metric,
             peso: el.height.metric,
             anoDeVida: el.life_span,
-            img: el.reference_image_id,
-            temperamento: el.temperament,
+            img: el.image.url,
+            temperamento: el.temperament ? el.temperament.split(',') : ['Not found'],
             criadoPara: el.bred_for
         }
     })
