@@ -15,7 +15,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     altura: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false
     },
     peso: {
@@ -23,11 +23,11 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     anoDeVida:{
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: true
     },
-    imgBd: {
-      type: DataTypes.STRING,
+    img: {
+      type: DataTypes.TEXT,
       allowNull: true
     },
     criadoPara: {

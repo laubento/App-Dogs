@@ -1,4 +1,4 @@
-
+ 
 
 
 // Traigo axios
@@ -117,8 +117,8 @@ router.get('/temperaments', async (req, res) => {
 
 router.post('/dogs', async (req, res) => {
     await getTemperamet()
-    const {name, altura, peso, anoDeVida, imgBd, temperamento, criadoPara} = req.body
-    const createDog = await Dog.create({ name, altura, peso, anoDeVida, imgBd, criadoPara})
+    const {name, altura, peso, anoDeVida, img, temperamento, criadoPara} = req.body
+    const createDog = await Dog.create({ name, altura, peso, anoDeVida, img, criadoPara})
     const createTemperament = await Temperamento.findAll({
         where: {name: temperamento}
     })
