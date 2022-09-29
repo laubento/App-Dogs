@@ -125,4 +125,13 @@ router.post('/dogs', async (req, res) => {
     createDog.addTemperamento(createTemperament)
     res.send('Personaje creado con exito')
 })   
+
+router.delete('/dog/:id', async (req, res) => {
+    const {id} = req.params
+    await Dog.destroy({where: {id}})
+    .then(() => {return res.send('Eliminado')})
+    .catch((err) => {return res.send(err)})
+})
+
+
 module.exports = router;
